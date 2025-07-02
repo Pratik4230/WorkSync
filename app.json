@@ -4,14 +4,14 @@
     "slug": "worksync",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/AppIcon.jpg",
+    "icon": "./assets/images/icon.png",
     "scheme": "worksync",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "splash": {
-      "image": "./assets/images/SplashScreen.jpg",
+      "image": "./assets/images/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#f59e0b"
     },
     "ios": {
       "supportsTablet": true,
@@ -20,7 +20,7 @@
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "backgroundColor": "#f59e0b"
       },
       "edgeToEdgeEnabled": true,
       "package": "com.pratik4230.worksync"
@@ -31,21 +31,8 @@
       "favicon": "./assets/images/favicon.png"
     },
     "plugins": [
-      "expo-router",
-      [
-        "react-native-bottom-tabs",
-        [
-          "expo-build-properties",
-          {
-          "ios": {
-            "extraPods": [
-              { "name": "SDWebImage", "modular_headers": true }, 
-              { "name": "SDWebImageSVGCoder", "modular_headers": true }
-            ]
-            }
-          }
-        ]
-      ]
+      "expo-router"
+    
     ],
     "experiments": {
       "typedRoutes": true
