@@ -1,13 +1,34 @@
-import { View, Text, TextInput } from 'react-native'
+import { ScrollView, View } from 'react-native'
 import React from 'react'
 import { StyleSheet } from 'react-native-unistyles'
+import Button from '../UI/Button'
+import Label from '../UI/Label'
+import Input from '../UI/Input'
+import AlertDialog from '../UI/AlertDialog'
 
 const Uni = () => {
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Hello</Text>
+    <ScrollView>
+      {/* Showcase Button variants */}
+      <View style={{ gap: 12, width: '100%', alignItems: 'center', marginBottom: 24 }}>
+        <Button  variant="primary" style={{ width: 200 }}>Primary</Button>
+        <Button variant="secondary" style={{ width: 200 }}>Secondary</Button>
+        <Button variant="blue" style={{ width: 200 }}>Blue</Button>
+        <Button variant="green" style={{ width: 200 }}>Green</Button>
+        <Button variant="orange" style={{ width: 200 }}>Orange</Button>
+        <Button variant="destructive" style={{ width: 200 }}>Destructive</Button>
+        <Button variant="outline" style={{ width: 200 }}>Outline</Button>
+        <Button variant="ghost" style={{ width: 200 }}>Ghost</Button>
+
+        <Label  >Hello</Label>
+        <Input  value='' variant='secondary' placeholder="Enter your name" onChangeText={() => {}} />
+
+ {/* <AlertDialog visible={true} onClose={() => {}} title="Hello" description="This is a test alert dialog" confirmLabel="OK" cancelLabel="Cancel" onConfirm={() => {}} onCancel={() => {}} confirmVariant='blue' cancelVariant='outline'  /> */}
+
+      </View>
       <View style={styles.box}>
-        <TextInput style={styles.input} placeholder='Enter your name' />
+       
       <View style={styles.box1}>
       <View style={styles.box2}>
       <View style={styles.box3}>
@@ -16,7 +37,8 @@ const Uni = () => {
 </View>
 </View>
       </View>
-    <Text style={styles.text2}>Hello</Text>
+    
+    </ScrollView>
     </View>
   )
 }
@@ -29,10 +51,10 @@ const styles = StyleSheet.create((theme, rt) => ({
     backgroundColor: theme.colors.background,
     justifyContent: 'center',
     alignItems: 'center',
-    padding: rt.insets.top,
+    paddingTop: rt.insets.top,
     paddingBottom: rt.insets.bottom,
     paddingHorizontal: rt.insets.left,
-    paddingRight: rt.insets.right,
+    
     transform: [
       {
           translateY: rt.insets.ime * -1,
@@ -88,30 +110,6 @@ const styles = StyleSheet.create((theme, rt) => ({
     alignItems: 'center',
   },
 
-  text: {
-    color: theme.colors.text,
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-
-  text2: {
-    color: theme.colors.textSecondary,
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-
-  input: {
-    backgroundColor: theme.colors.card,
-    width: 100,
-    height: 100,
-    borderRadius: 10,
-    borderWidth: 1,
-    borderColor: theme.colors.border,
-    padding: 10,
-    margin: 10,
-    color: theme.colors.text,
-    fontSize: 20,
-  },
 
 
 
