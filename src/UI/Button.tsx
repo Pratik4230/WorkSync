@@ -1,14 +1,13 @@
 import React from 'react';
-import { Pressable, Text, ActivityIndicator, View, ViewStyle, TextStyle, StyleProp } from 'react-native';
-import { useUnistyles } from 'react-native-unistyles';
+import { Pressable, Text, ActivityIndicator, StyleProp, ViewStyle, TextStyle } from 'react-native';
+import { StyleSheet } from 'react-native-unistyles';
 
-// Button variants and sizes
 const VARIANTS = ['primary', 'secondary', 'outline', 'ghost', 'destructive', 'blue', 'green', 'orange'] as const;
 type Variant = typeof VARIANTS[number];
 const SIZES = ['default', 'sm', 'lg', 'icon'] as const;
 type Size = typeof SIZES[number];
 
-interface ButtonProps {
+interface BtnProps {
   children?: React.ReactNode;
   onPress?: () => void;
   variant?: Variant;
@@ -21,65 +20,15 @@ interface ButtonProps {
   accessibilityLabel?: string;
 }
 
-export const Button: React.FC<ButtonProps> = ({
-  children,
-  onPress,
-  variant = 'primary',
-  size = 'default',
-  disabled = false,
-  loading = false,
-  fullWidth = false,
-  style,
-  textStyle,
-  accessibilityLabel,
-}) => {
-  const { theme } = useUnistyles();
-  const styles = createStyles(theme, { variant, size, fullWidth, disabled });
-
-  return (
-    <Pressable
-      style={({ pressed }) => [
-        styles.base,
-        styles[variant],
-        styles[size],
-        fullWidth && styles.fullWidth,
-        disabled && styles.disabled,
-        pressed && !disabled && styles.pressed,
-        style,
-      ]}
-      onPress={onPress}
-      disabled={disabled || loading}
-      accessibilityRole="button"
-      accessibilityLabel={accessibilityLabel}
-      accessibilityState={{ disabled: disabled || loading }}
-    >
-      {loading ? (
-        <ActivityIndicator color={theme.colors.text} />
-      ) : (
-        typeof children === 'string' ? (
-          <Text style={[styles.text, styles[`${variant}Text`], styles[`${size}Text`], textStyle]}>{children}</Text>
-        ) : (
-          children
-        )
-      )}
-    </Pressable>
-  );
-};
-
-const createStyles = (theme: any, { variant, size, fullWidth, disabled }: any) => ({
+const styles = StyleSheet.create((theme) => ({
   base: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 8,
-    paddingVertical: size === 'lg' ? 16 : size === 'sm' ? 6 : 12,
-    paddingHorizontal: size === 'lg' ? 28 : size === 'sm' ? 12 : 20,
-    minHeight: size === 'lg' ? 48 : size === 'sm' ? 32 : 40,
-    minWidth: size === 'icon' ? 40 : undefined,
-    opacity: disabled ? 0.6 : 1,
-    borderWidth: variant === 'outline' ? 1 : 0,
-    borderColor: variant === 'outline' ? theme.colors.border : 'transparent',
-    width: fullWidth ? '100%' : undefined,
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+    minHeight: 40,
     gap: theme.gap(0.5),
     backgroundColor: 'transparent',
   },
@@ -101,13 +50,13 @@ const createStyles = (theme: any, { variant, size, fullWidth, disabled }: any) =
     backgroundColor: theme.colors.error,
   },
   blue: {
-    backgroundColor: theme.colors.blue ? theme.colors.blue[500] : '#3b82f6',
+    backgroundColor: theme.colors.info,
   },
   green: {
-    backgroundColor: theme.colors.green ? theme.colors.green[500] : '#22c55e',
+    backgroundColor: theme.colors.success,
   },
   orange: {
-    backgroundColor: theme.colors.orange ? theme.colors.orange[500] : '#f97316',
+    backgroundColor: theme.colors.warning,
   },
   pressed: {
     opacity: 0.85,
@@ -137,16 +86,10 @@ const createStyles = (theme: any, { variant, size, fullWidth, disabled }: any) =
     borderRadius: 999,
   },
   text: {
-    color: variant === 'outline' || variant === 'ghost' ? theme.colors.text : theme.colors.background,
+    color: theme.colors.background,
     fontWeight: '600',
-    fontSize: size === 'lg' ? 18 : size === 'sm' ? 14 : 16,
+    fontSize: 16,
     textAlign: 'center',
-  },
-  primaryText: {
-    color: theme.colors.background,
-  },
-  secondaryText: {
-    color: theme.colors.background,
   },
   outlineText: {
     color: theme.colors.text,
@@ -166,7 +109,6 @@ const createStyles = (theme: any, { variant, size, fullWidth, disabled }: any) =
   orangeText: {
     color: theme.colors.background,
   },
-  defaultText: {},
   smText: {
     fontSize: 14,
   },
@@ -174,6 +116,72 @@ const createStyles = (theme: any, { variant, size, fullWidth, disabled }: any) =
     fontSize: 18,
   },
   iconText: {},
-});
+}));
+
+const textVariantMap = {
+  primary: styles.text,
+  secondary: styles.text,
+  outline: styles.outlineText,
+  ghost: styles.ghostText,
+  destructive: styles.destructiveText,
+  blue: styles.blueText,
+  green: styles.greenText,
+  orange: styles.orangeText,
+} as const;
+
+const textSizeMap = {
+  default: {},
+  sm: styles.smText,
+  lg: styles.lgText,
+  icon: styles.iconText,
+} as const;
+
+export const Button: React.FC<BtnProps> = ({
+  children,
+  onPress,
+  variant = 'primary',
+  size = 'default',
+  disabled = false,
+  loading = false,
+  fullWidth = false,
+  style,
+  textStyle,
+  accessibilityLabel,
+}) => {
+  const s = styles;
+  return (
+    <Pressable
+      style={({ pressed }) => [
+        s.base,
+        s[variant],
+        s[size],
+        fullWidth && s.fullWidth,
+        disabled && s.disabled,
+        pressed && !disabled && s.pressed,
+        style,
+      ]}
+      onPress={onPress}
+      disabled={disabled || loading}
+      accessibilityRole="button"
+      accessibilityLabel={accessibilityLabel}
+      accessibilityState={{ disabled: disabled || loading }}
+    >
+      {loading ? (
+        <ActivityIndicator color={s.text.color} />
+      ) : (
+        typeof children === 'string' ? (
+          <Text style={[
+            s.text,
+            textVariantMap[variant],
+            textSizeMap[size],
+            textStyle,
+          ]}>{children}</Text>
+        ) : (
+          children
+        )
+      )}
+    </Pressable>
+  );
+};
 
 export default Button; 

@@ -12,6 +12,7 @@ import Switch from '../UI/Switch'
 import Spacer from '../UI/Spacer'
 
 
+
 const Uni = () => { 
   const [checked, setChecked] = useState(false);
   return (
@@ -27,10 +28,11 @@ const Uni = () => {
         <Button variant="destructive" style={{ width: 200 }}>Destructive</Button>
         <Button  variant="outline" style={{ width: 200 }}>Outline</Button>
         <Button  variant="ghost" style={{ width: 200 }}>Ghost</Button>
-
+       
        
 
         <Label  >Hello</Label>
+
         <Input  value='' variant='secondary' placeholder="Enter your name" onChangeText={() => {}} />
 
  {/* <AlertDialog visible={true} onClose={() => {}} title="Hello" description="This is a test alert dialog" confirmLabel="OK" cancelLabel="Cancel" onConfirm={() => {}} onCancel={() => {}} confirmVariant='blue' cancelVariant='outline'  /> */}
